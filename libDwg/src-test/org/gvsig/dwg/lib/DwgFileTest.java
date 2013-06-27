@@ -3,6 +3,8 @@ package org.gvsig.dwg.lib;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.acl.Owner;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -10,6 +12,7 @@ import junit.framework.TestCase;
 import org.gvsig.dwg.lib.objects.DwgBlock;
 import org.gvsig.dwg.lib.objects.DwgBlockControl;
 import org.gvsig.dwg.lib.objects.DwgBlockHeader;
+import org.gvsig.dwg.lib.objects.DwgEndblk;
 import org.gvsig.dwg.lib.objects.DwgLine;
 import org.gvsig.dwg.lib.objects.DwgText;
 
@@ -78,10 +81,37 @@ public class DwgFileTest extends TestCase {
 //				}
 //			}
 			
-			if (object instanceof DwgObject) {
-				System.out.println("#####################################");
-				DwgObject dwgObj = (DwgObject) object;
+//			if (object instanceof DwgBlock) {
+//				System.out.println("##################################### DwgBlock");
+//				DwgBlock dwgObj = (DwgBlock) object;
+//				dwg.printInfoOfAObject(dwgObj);
+//				
+//			}
+//			
+//			if (object instanceof DwgBlockControl) {
+//				System.out.println("##################################### DwgBlockControl");
+//				DwgBlockControl dwgObj = (DwgBlockControl) object;
+//				dwg.printInfoOfAObject(dwgObj);
+//				
+//			}
+			
+			if (object instanceof DwgBlockHeader) {
+				System.out.println("##################################### DwgBlockHeader");
+				DwgBlockHeader dwgObj = (DwgBlockHeader) object;
 				dwg.printInfoOfAObject(dwgObj);
+				ArrayList objects = dwgObj.getObjects();
+				System.out.println("owned objecs" + objects.size());
+				for (Object object2 : objects) {
+					System.out.println("owned + " + object2.getClass().getName());
+					if (object2 instanceof DwgBlock) {
+						DwgBlock dwgBlock = (DwgBlock) object2;
+						System.out.println(dwgBlock.getExtendedData());
+					}
+					if (object2 instanceof DwgEndblk) {
+						DwgEndblk dwgEndblk = (DwgEndblk) object2;
+					}
+				}
+				
 			}
 		}
 	}
